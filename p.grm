@@ -1,0 +1,66 @@
+"Name" = 'Python Subset Grammar'
+"Author" = 'XXX'
+"Version" = '1.1'
+"About" = '.'
+
+"Start Symbol" = <Program>
+"Case Sensitive" = 'True'
+
+! ------------------------------------------------- Sets
+
+{StringChars} = {Printable} - ['"']
+
+! ------------------------------------------------- Terminals
+
+Identifier = {Letter} {Letter}*
+IntegerLiteral = {Digit}+
+FloatLiteral = {Digit}+ '.' {Digit}+
+StringLiteral = '"' {StringChars}* '"'
+BooleanLiteral = 'True' | 'False'
+
+! ------------------------------------------------- Rules
+
+
+<Program> ::= <Statements>
+
+<Statements> ::= <Statement>
+               | <Statements> <Statement>
+
+<Statement> ::= <VariableDeclarationStatement>
+              | <ConditionalStatement>
+              | <LoopStatement>
+              | <FunctionDefinition>
+              | <Expression>
+
+<VariableDeclarationStatement> ::= Identifier '=' <Expression>
+                                  | Identifier '=' <Expression> <Expression>
+
+<ConditionalStatement> ::= 'if' <Expression> ':' <Statements>
+                           | 'if' <Expression> ':' <Statements> 'else' ':' <Statements>
+
+<LoopStatement> ::= 'while' <Expression> ':' <Statements>
+                   | 'for' Identifier 'in' <Expression> ':' <Statements>
+
+<FunctionDefinition> ::= 'def' Identifier '(' <Parameters> ')' ':' <Statements>
+
+<Parameters> ::= Identifier
+               | Identifier ',' <Parameters>
+
+<Expression> ::= Identifier
+               | IntegerLiteral
+               | FloatLiteral
+               | StringLiteral
+               | BooleanLiteral
+               | <Expression> '+' <Expression>
+               | <Expression> '-' <Expression>
+               | <Expression> '*' <Expression>
+               | <Expression> '/' <Expression>
+               | <Expression> '<' <Expression>
+               | <Expression> '>' <Expression>
+               | <Expression> '==' <Expression>
+               | <Expression> '!=' <Expression>
+               | <Expression> 'and' <Expression>
+               | <Expression> 'or' <Expression>
+               | 'not' <Expression>
+               | '(' <Expression> ')'
+
